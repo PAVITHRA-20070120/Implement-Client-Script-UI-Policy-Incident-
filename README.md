@@ -1,95 +1,101 @@
-ServiceNow Incident – Client Scripts & UI Policies
-Project Overview
+# ServiceNow Incident – Client Scripts & UI Policies
 
-This project demonstrates the implementation of Client Scripts and UI Policies in the ServiceNow Incident Management module.
+## Project Overview
 
-The configuration dynamically controls Incident form behavior based on user actions and Incident conditions without requiring the form to be submitted.
+This project demonstrates the implementation of **Client Scripts and UI Policies** in the **ServiceNow Incident Management** module.
 
-Objectives
+The configuration dynamically controls Incident form behavior based on user actions and Incident conditions, helping to improve data accuracy and consistency.
 
-Implement UI Policies for the Incident table.
+## Objectives
 
-Dynamically control form fields based on Incident conditions.
+- Implement UI Policies for the Incident table.
+- Dynamically control form fields based on Incident conditions.
+- Automatically set Urgency for High Impact Incidents.
+- Ensure Assigned To is provided before saving High Impact Incidents.
+- Prevent State changes through list editing.
+- Test and verify the implemented configurations.
 
-Automatically set Urgency for High Impact Incidents.
+## Features Implemented
 
-Ensure Assigned To is provided before saving High Impact Incidents.
+### High Impact Control – UI Policy
 
-Prevent State changes through list editing.
+A UI Policy named **High Impact Control** was created for the Incident table.
 
-Test and verify the implemented configurations.
+- **Table:** Incident
+- **Condition:** Impact is High
+- **Reverse if false:** Enabled
 
-Features Implemented
-High Impact Control – UI Policy
+When the condition is no longer satisfied, the applied field controls are automatically reverted.
 
-A UI Policy named High Impact Control was created for the Incident table.
+### Urgency Field Control
 
-Condition: Impact is High
+A **UI Policy Action** was configured for the Urgency field.
 
-The Reverse if false option is enabled so that the changes are reverted when the condition is no longer satisfied.
+When Impact is High:
 
-Urgency Field Control
+- Urgency becomes **Read-only**.
+- Users cannot manually modify the Urgency value.
 
-A UI Policy Action was configured for the Urgency field.
+### Automatic Urgency Update
 
-When Impact is High, the Urgency field becomes read-only, preventing users from manually changing it.
+An **onChange Client Script** was created for the Impact field.
 
-Automatic Urgency Update
+When Impact is changed to High:
 
-An onChange Client Script was created for the Impact field.
+- Urgency is automatically set to **High**.
+- An informational message is displayed to the user.
 
-When Impact is changed to High, the script automatically sets Urgency to High and displays an informational message to the user.
+### Assigned To Validation
 
-Assigned To Validation
+An **onSubmit Client Script** was implemented to validate the Assigned To field.
 
-An onSubmit Client Script was implemented to validate the Assigned To field.
+For High Impact Incidents:
 
-For High Impact Incidents, the record cannot be saved when Assigned To is empty. An error message is displayed and the user is required to provide an Assigned To value.
+- Assigned To must be provided.
+- The Incident cannot be saved when Assigned To is empty.
+- An error message is displayed to the user.
 
-State Change Restriction
+### State Change Restriction
 
-An onCellEdit Client Script was implemented for the State field.
+An **onCellEdit Client Script** was implemented for the State field.
 
-When a user attempts to change the Incident State directly from the list view, the update is blocked and the user is instructed to open the Incident record.
+When a user attempts to change the Incident State directly from the list view:
 
-Testing
+- The update is blocked.
+- A warning message is displayed.
+- The user is instructed to open the Incident record for updating.
+
+## Testing
 
 The implemented configurations were tested using the following scenarios:
 
-High Impact Incident field behavior
+| Test Scenario | Result |
+|---|---|
+| High Impact Incident field behavior | Pass |
+| Automatic Urgency update | Pass |
+| Assigned To validation | Pass |
+| Successful Incident save | Pass |
+| UI Policy reverse condition | Pass |
+| State list-edit blocking | Pass |
+| Form-based Incident update | Pass |
 
-Automatic Urgency update
+All configured behaviors were successfully verified in the ServiceNow instance.
 
-Assigned To mandatory validation
+## Technologies Used
 
-Successful Incident save
+- ServiceNow Incident Management
+- Client Scripts
+- UI Policies
+- UI Policy Actions
+- JavaScript
+- GitHub
 
-UI Policy reverse condition
-
-State list-edit blocking
-
-Form-based Incident update
-
-All configured behaviors were verified successfully in the ServiceNow instance.
-
-Technologies Used
-
-ServiceNow Incident Management
-
-Client Scripts
-
-UI Policies
-
-UI Policy Actions
-
-JavaScript
-
-GitHub
-
-Screenshots
+## Screenshots
 
 Screenshots of the ServiceNow configuration and testing results are included in this repository as project evidence.
 
-Conclusion
+## Conclusion
 
-The project successfully demonstrates the use of ServiceNow Client Scripts and UI Policies to improve Incident form behavior, enforce validation rules, automate field updates, and prevent incorrect data entry.
+The project successfully demonstrates the use of **ServiceNow Client Scripts and UI Policies** to improve Incident form behavior, enforce validation rules, automate field updates, and prevent incorrect data entry.
+
+The implemented solution provides better control, validation, and consistency in **ServiceNow Incident Management**.
